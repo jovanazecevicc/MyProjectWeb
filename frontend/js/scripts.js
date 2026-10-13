@@ -52,3 +52,28 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+ // Simple SPA-style navigation
+document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.querySelectorAll('#navbarResponsive .nav-link');
+
+    navLinks.forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            const targetId = link.getAttribute('href');
+
+            if (targetId && targetId.startsWith('#')) {
+                const targetSection = document.querySelector(targetId);
+
+                if (targetSection) {
+                    event.preventDefault();
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    history.replaceState(null, '', targetId);
+                }
+            }
+        });
+    });
+});
+
+ 

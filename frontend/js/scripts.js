@@ -54,26 +54,60 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
  // Simple SPA-style navigation
+
+ // SPA-style navigation
+
+ // SPA-style navigation
 document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('#navbarResponsive .nav-link');
+    const masthead = document.querySelector('.masthead');
+    const sections = document.querySelectorAll(
+        '#portfolio, #about, #contact'
+    );
+    const navLinks = document.querySelectorAll(
+        '#navbarResponsive .nav-link'
+    );
+    const brand = document.querySelector('.navbar-brand');
+
+    function showSection(targetId) {
+        const target = targetId === 'page-top'
+            ? masthead
+            : document.getElementById(targetId);
+
+        if (!target) return;
+
+        if (masthead) {
+            masthead.classList.toggle('spa-hidden', target !== masthead);
+        }
+
+        sections.forEach(function (section) {
+            section.classList.toggle('spa-hidden', section !== target);
+        });
+
+        history.replaceState(null, '', '#' + targetId);
+    }
 
     navLinks.forEach(function (link) {
         link.addEventListener('click', function (event) {
-            const targetId = link.getAttribute('href');
+            const targetId = link.getAttribute('href').substring(1);
 
-            if (targetId && targetId.startsWith('#')) {
-                const targetSection = document.querySelector(targetId);
-
-                if (targetSection) {
-                    event.preventDefault();
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    history.replaceState(null, '', targetId);
-                }
+            if (targetId === 'portfolio' ||
+                targetId === 'about' ||
+                targetId === 'contact') {
+                event.preventDefault();
+                showSection(targetId);
             }
         });
     });
+
+    if (brand) {
+        brand.addEventListener('click', function (event) {
+            event.preventDefault();
+            showSection('page-top');
+        });
+    }
+
+    showSection('page-top');
 });
+
 
  

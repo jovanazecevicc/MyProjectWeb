@@ -1,113 +1,81 @@
-/*!
-* Start Bootstrap - Freelancer v7.0.7 (https://startbootstrap.com/theme/freelancer)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-freelancer/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
 
-window.addEventListener('DOMContentLoaded', event => {
+document.addEventListener("DOMContentLoaded", function () {
+    const pages = document.querySelectorAll(".spa-view");
 
-    // Navbar shrink function
-    var navbarShrink = function () {
-        const navbarCollapsible = document.body.querySelector('#mainNav');
-        if (!navbarCollapsible) {
+    function showPage(pageId) {
+        const selectedPage = document.getElementById(pageId);
+
+        if (!selectedPage || !selectedPage.classList.contains("spa-view")) {
             return;
         }
-        if (window.scrollY === 0) {
-            navbarCollapsible.classList.remove('navbar-shrink')
-        } else {
-            navbarCollapsible.classList.add('navbar-shrink')
-        }
 
-    };
-
-    // Shrink the navbar 
-    navbarShrink();
-
-    // Shrink the navbar when page is scrolled
-    document.addEventListener('scroll', navbarShrink);
-
-    // Activate Bootstrap scrollspy on the main nav element
-    const mainNav = document.body.querySelector('#mainNav');
-    if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
-            target: '#mainNav',
-            rootMargin: '0px 0px -40%',
-        });
-    };
-
-    // Collapse responsive navbar when toggler is visible
-    const navbarToggler = document.body.querySelector('.navbar-toggler');
-    const responsiveNavItems = [].slice.call(
-        document.querySelectorAll('#navbarResponsive .nav-link')
-    );
-    responsiveNavItems.map(function (responsiveNavItem) {
-        responsiveNavItem.addEventListener('click', () => {
-            if (window.getComputedStyle(navbarToggler).display !== 'none') {
-                navbarToggler.click();
-            }
-        });
-    });
-
-});
-
- // Simple SPA-style navigation
-
- // SPA-style navigation
-
- // SPA-style navigation
-document.addEventListener('DOMContentLoaded', function () {
-    const masthead = document.querySelector('.masthead');
-    const sections = document.querySelectorAll(
-        '#portfolio, #about, #contact'
-    );
-    const navLinks = document.querySelectorAll(
-        '#navbarResponsive .nav-link'
-    );
-    const brand = document.querySelector('.navbar-brand');
-
-    function showSection(targetId) {
-        const target = targetId === 'page-top'
-            ? masthead
-            : document.getElementById(targetId);
-
-        if (!target) return;
-
-        if (masthead) {
-            masthead.classList.toggle('spa-hidden', target !== masthead);
-        }
-
-        sections.forEach(function (section) {
-            section.classList.toggle('spa-hidden', section !== target);
+        pages.forEach(function (page) {
+            page.classList.add("spa-hidden");
         });
 
-        history.replaceState(null, '', '#' + targetId);
+        selectedPage.classList.remove("spa-hidden");
+
+        document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+            link.classList.toggle(
+                "active",
+                link.getAttribute("href") === "#" + pageId
+            );
+        });
+
+        window.scrollTo(0, 0);
     }
 
-    navLinks.forEach(function (link) {
-        link.addEventListener('click', function (event) {
-            const targetId = link.getAttribute('href').substring(1);
+    document.addEventListener("click", function (event) {
+        const link = event.target.closest('a[href^="#"]');
 
-            if (targetId === 'portfolio' ||
-                targetId === 'about' ||
-                targetId === 'contact') {
-                event.preventDefault();
-                showSection(targetId);
-            }
-        });
-    });
+        if (!link) return;
 
-    if (brand) {
-        brand.addEventListener('click', function (event) {
+        const pageId = link.getAttribute("href").substring(1);
+        const selectedPage = document.getElementById(pageId);
+
+        if (selectedPage && selectedPage.classList.contains("spa-view")) {
             event.preventDefault();
-            showSection('page-top');
+            showPage(pageId);
+            history.pushState(null, "", "#" + pageId);
+        }
+    });
+
+    window.addEventListener("popstate", function () {
+        showPage(location.hash.substring(1) || "home");
+    });
+
+    showPage(location.hash.substring(1) || "home");
+
+    // Search destinations
+    const searchInput = document.getElementById("destinationSearch");
+    const cards = document.querySelectorAll(".destination-item");
+    const noDestinations = document.getElementById("noDestinations");
+
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value.toLowerCase().trim();
+            let count = 0;
+
+            cards.forEach(function (card) {
+                const matches = card.textContent.toLowerCase().includes(query);
+                card.style.display = matches ? "" : "none";
+
+                if (matches) count++;
+            });
+
+            if (noDestinations) {
+                noDestinations.style.display = count === 0 ? "block" : "none";
+            }
         });
     }
 
-    showSection('page-top');
+    // Demo forms
+    document.querySelectorAll(".demo-form").forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            alert("This is a demo. Authentication is not connected yet.");
+        });
+    });
+
+    console.log("Explore Bosnia loaded successfully.");
 });
-
-
- 

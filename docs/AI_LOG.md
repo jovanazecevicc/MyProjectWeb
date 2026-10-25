@@ -4,16 +4,16 @@
 
 ### AI tools I used
 
-I used ChatGPT to help me with the project structure, GitHub, README and fixing problems in my code.
+I used ChatGPT to help me with my project, fix code problems and understand GitHub.
 
-### Example 1: Navigation
+### Example 1: Website navigation
 
-I had some problems with the website navigation and JavaScript. I checked the code and made changes to fix the problems. After that, I checked if the navigation worked correctly.
+When I was working on my website, Home, Destinations and other navigation links did not work correctly. I used ChatGPT to help me find and fix the problem. I made changes to the code and tested the links again.
 
-### Example 2: GitHub branches
+### Example 2: JavaScript
 
-At first, I used a branch called `new-branch`, but the instructions required a branch called `milestone1`. I created the correct branch and opened a new pull request.
+I also had a problem with JavaScript loading and navigation. I had to make more changes to the code until the website worked correctly.
 
 ### What I learned
 
-I learned how to organize my project, use GitHub branches and create a pull request. I also learned that I need to test my code after making changes.
+I learned how to fix navigation problems, test my website and use GitHub branches and pull requests.

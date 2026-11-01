@@ -18,3 +18,6 @@ vendor/
 .idea/
 .DS_Store
 Thumbs.db
+backend/config/config.php
+# Local database credentials
+backend/config/config.php
